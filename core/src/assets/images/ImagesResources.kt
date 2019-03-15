@@ -6,7 +6,6 @@ import assets.images.space.SpaceResources
 /*
 * Icons from Icons made by https://www.freepik.com/ from  https://www.flaticon.com/	.
 * Flaticon is licensed by http://creativecommons.org/licenses/by/3.0/
-*
 */
 
 class ImagesResources {
@@ -15,6 +14,10 @@ class ImagesResources {
 
     fun badlogicJPG(): String {
         return this.javaClass.getResource("badlogic.jpg").path
+    }
+
+    fun animTest1PNG(): String {
+        return this.javaClass.getResource("anim_test_1.png").path
     }
 
 }
