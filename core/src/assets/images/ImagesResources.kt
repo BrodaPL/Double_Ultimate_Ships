@@ -16,8 +16,20 @@ class ImagesResources {
         return this.javaClass.getResource("badlogic.jpg").path
     }
 
+    fun badlogic2JPG(): String {
+        return this.javaClass.getResource("badlogic2.jpg").path
+    }
+
     fun animTest1PNG(): String {
         return this.javaClass.getResource("anim_test_1.png").path
+    }
+
+    fun bswitch_offPNG(): String {
+        return this.javaClass.getResource("switch_off.png").path
+    }
+
+    fun bswitch_onPNG(): String {
+        return this.javaClass.getResource("switch_on.png").path
     }
 
 }

@@ -13,21 +13,27 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.*
-import javafx.scene.layout.Background
+import com.badlogic.gdx.scenes.scene2d.ui.Image
 import mygdx.testone.enums.TestStates
 
 class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
 
     internal lateinit var batch: SpriteBatch
+
+
     internal var imagesRes = ImagesResources()
     internal var soundRes = SoundssResources()
 
-    internal lateinit var img: Texture
-    internal lateinit var img2: Texture
-    internal lateinit var img3_1x5: Texture
+    internal lateinit var texture: Texture
+    internal lateinit var texture2: Texture
+    internal lateinit var texture3_1x5: Texture
     internal lateinit var sprite1: Sprite
     internal lateinit var sprite2: Sprite
     internal lateinit var sprite3: Sprite
+    internal lateinit var img_rotated: Image
+    internal lateinit var img_resized: Image
+    internal lateinit var img_repeated: Image
+
     internal var elapsedTime = 0f
 
     internal lateinit var soundBackground: Music
@@ -48,10 +54,10 @@ class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
         //initializing resources
 
         batch = SpriteBatch()
-        img = Texture(imagesRes.badlogicJPG())
-        img2 = Texture(imagesRes.space.ships.spaceShuttle_1PNG())
-        img3_1x5 = Texture(imagesRes.animTest1PNG())
-        sprite1 = Sprite(img2)
+        texture = Texture(imagesRes.badlogicJPG())
+        texture2 = Texture(imagesRes.space.ships.spaceShuttle_1PNG())
+        texture3_1x5 = Texture(imagesRes.animTest1PNG())
+        sprite1 = Sprite(texture2)
         sprite1.setX(64f)
         sprite1.setY(0f)
 
@@ -59,10 +65,13 @@ class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
         sprite3 = Sprite(Texture(imagesRes.space.moonPNG()))
 
         for( i in 0..4){
-            animClipsList.add(TextureRegion(img3_1x5,i*64,0,64,64))
+            animClipsList.add(TextureRegion(texture3_1x5,i*64,0,64,64))
         }
 
         animation1 = Animation<TextureRegion>(1/2f, animClipsList, Animation.PlayMode.LOOP)
+
+        img_rotated = Image(texture)
+
 
         soundBackground = Gdx.audio.newMusic(Gdx.files.internal(soundRes.dzcozamanisAtlanticOceanInKeyWestMP3()))
         soundShoot = Gdx.audio.newSound(Gdx.files.internal(soundRes.kastenfrosch_cannonballMP3()))
@@ -94,7 +103,7 @@ class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
 
 
         if(currentState==TestStates.IMAGES){
-            batch.draw(img, 700f-img.width, 500f-img.height)
+            batch.draw(texture, 700f-texture.width, 500f-texture.height)
 
             sprite1.y=0f
             sprite1.draw(batch)
@@ -152,9 +161,9 @@ class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
 
     override fun dispose() {
         batch.dispose()
-        img.dispose()
-        img2.dispose()
-        img3_1x5.dispose()
+        texture.dispose()
+        texture2.dispose()
+        texture3_1x5.dispose()
         font.dispose()
         sprite1.texture.dispose()
         sprite2.texture.dispose()
