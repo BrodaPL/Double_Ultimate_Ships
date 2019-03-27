@@ -24,11 +24,11 @@ class ImagesResources {
         return this.javaClass.getResource("anim_test_1.png").path
     }
 
-    fun bswitch_offPNG(): String {
+    fun switch_offPNG(): String {
         return this.javaClass.getResource("switch_off.png").path
     }
 
-    fun bswitch_onPNG(): String {
+    fun switch_onPNG(): String {
         return this.javaClass.getResource("switch_on.png").path
     }
 

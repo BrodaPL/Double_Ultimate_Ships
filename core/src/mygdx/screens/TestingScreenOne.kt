@@ -1,11 +1,8 @@
-package mygdx.testone
+package mygdx.screens
 
 import assets.images.ImagesResources
 import assets.sounds.SoundssResources
-import com.badlogic.gdx.ApplicationAdapter
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
-import com.badlogic.gdx.InputProcessor
+import com.badlogic.gdx.*
 import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.Color
@@ -13,10 +10,11 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Pixmap
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.*
-import com.badlogic.gdx.scenes.scene2d.ui.Image
-import mygdx.testone.enums.TestStates
+import com.badlogic.gdx.scenes.scene2d.ui.Skin
+import mygdx.enums.TestStates
 
-class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
+
+class TestingScreenOne(val game :Game, val skin: Skin) : Screen, InputProcessor {
 
     internal lateinit var batch: SpriteBatch
 
@@ -30,9 +28,6 @@ class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
     internal lateinit var sprite1: Sprite
     internal lateinit var sprite2: Sprite
     internal lateinit var sprite3: Sprite
-    internal lateinit var img_rotated: Image
-    internal lateinit var img_resized: Image
-    internal lateinit var img_repeated: Image
 
     internal var elapsedTime = 0f
 
@@ -50,9 +45,12 @@ class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
     internal var inputVal = "nothing"
 
 
-    override fun create() {
-        //initializing resources
+    override fun hide() {
 
+    }
+
+    override fun show() {
+        //initializing resources
         batch = SpriteBatch()
         texture = Texture(imagesRes.badlogicJPG())
         texture2 = Texture(imagesRes.space.ships.spaceShuttle_1PNG())
@@ -70,8 +68,6 @@ class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
 
         animation1 = Animation<TextureRegion>(1/2f, animClipsList, Animation.PlayMode.LOOP)
 
-        img_rotated = Image(texture)
-
 
         soundBackground = Gdx.audio.newMusic(Gdx.files.internal(soundRes.dzcozamanisAtlanticOceanInKeyWestMP3()))
         soundShoot = Gdx.audio.newSound(Gdx.files.internal(soundRes.kastenfrosch_cannonballMP3()))
@@ -81,28 +77,48 @@ class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
 
         font = BitmapFont()
         font.setColor(Color.GREEN)
+    }
+
+    override fun pause() {
 
     }
 
-    override fun render() {
+    override fun resume() {
+
+    }
+
+    override fun resize(width: Int, height: Int) {
+
+    }
+
+
+
+
+    override fun render(delta: Float) {
         Gdx.gl.glClearColor(1f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
         batch.begin()
         //poor input chandling
         if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)){
             if(Gdx.input.isKeyPressed(Input.Keys.NUM_1)){
-                currentState=TestStates.IMAGES
+                currentState= TestStates.IMAGES
             }else if(Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
-                currentState=TestStates.ANIMATION
+                currentState= TestStates.ANIMATION
             }else if(Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
-                currentState=TestStates.INPUT
+                currentState= TestStates.INPUT
             }else if(Gdx.input.isKeyPressed(Input.Keys.NUM_4)){
-                currentState=TestStates.SOUND
+                currentState= TestStates.SOUND
+            }else if(Gdx.input.isKeyPressed(Input.Keys.NUM_0)){
+                currentState= TestStates.IMAGES
+                if(soundBackground.isPlaying){
+                    soundBackground.stop()
+                }
+                game.setScreen(TitleScreenOne(game,skin))
             }
         }
 
 
-        if(currentState==TestStates.IMAGES){
+        if(currentState== TestStates.IMAGES){
             batch.draw(texture, 700f-texture.width, 500f-texture.height)
 
             sprite1.y=0f
@@ -113,19 +129,19 @@ class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
 
 
 
-        }else if(currentState==TestStates.ANIMATION){
+        }else if(currentState== TestStates.ANIMATION){
             elapsedTime += Gdx.graphics.deltaTime
             var currentFrame: TextureRegion = animation1.getKeyFrame(elapsedTime, true)
             batch.draw(currentFrame, 600f-64, 800f-64)
 
 
-            sprite1.setY(sprite1.getY()+Gdx.graphics.deltaTime*100)
+            sprite1.setY(sprite1.getY()+ Gdx.graphics.deltaTime*100)
             if(sprite1.y>800f){
                 sprite1.y=-512f
             }
             sprite1.draw(batch)
 
-        }else if(currentState==TestStates.INPUT){
+        }else if(currentState== TestStates.INPUT){
             Gdx.input.setInputProcessor(this)
 
             if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
@@ -138,17 +154,17 @@ class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
             sprite3.setY(-Gdx.input.getY().toFloat()+sprite3.height) // <- WTF?!
             sprite3.draw(batch)
 
-            font.draw(batch,"y: "+Gdx.input.getY(),8f, 32f)
-            font.draw(batch,"x: "+Gdx.input.getX(),8f, 16f)
+            font.draw(batch,"y: "+ Gdx.input.getY(),8f, 32f)
+            font.draw(batch,"x: "+ Gdx.input.getX(),8f, 16f)
 
-        }else if(currentState==TestStates.SOUND){
-           if(! soundBackground.isPlaying){
-               soundBackground.play()
-           }
+        }else if(currentState== TestStates.SOUND){
+            if(! soundBackground.isPlaying){
+                soundBackground.play()
+            }
             inputVal ="Click mouse buttons to do sound."
         }
 
-        if(currentState!=TestStates.SOUND){
+        if(currentState!= TestStates.SOUND){
             if(soundBackground.isPlaying){
                 soundBackground.stop()
             }
@@ -158,6 +174,7 @@ class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
 
         batch.end()
     }
+
 
     override fun dispose() {
         batch.dispose()
@@ -200,7 +217,7 @@ class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
 
 
     fun drawInfo(){
-        font.draw(batch,"Press 1,2,3,4 to change:",8f, 770f)
+        font.draw(batch,"Press 1,2,3,4 to change. Press 0 to exit.",8f, 770f)
         font.draw(batch,currentState.name,8f, 738f)
         font.draw(batch, inputVal,8f, 64f)
     }
@@ -231,7 +248,7 @@ class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
     }
 
     override fun keyUp(keycode: Int): Boolean {
-       return true
+        return true
     }
 
     override fun touchDragged(screenX: Int, screenY: Int, pointer: Int): Boolean {
@@ -243,11 +260,11 @@ class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
         if(keycode == Input.Keys.ANY_KEY){
             inputVal = "keyDown "+keycode
             if(keycode == Input.Keys.NUM_1){
-                currentState=TestStates.IMAGES
+                currentState= TestStates.IMAGES
             }else if(keycode == Input.Keys.NUM_2){
-                currentState=TestStates.ANIMATION
+                currentState= TestStates.ANIMATION
             }else if(keycode == Input.Keys.NUM_4){
-                currentState=TestStates.SOUND
+                currentState= TestStates.SOUND
             }
         }
         return true
@@ -263,10 +280,10 @@ class MyGdxTestOne : ApplicationAdapter(), InputProcessor {
 
         when(currentState){
             TestStates.SOUND ->{
-                if(button==Input.Buttons.LEFT){
+                if(button== Input.Buttons.LEFT){
                     soundShoot.play()
                 }
-                if(button==Input.Buttons.RIGHT){
+                if(button== Input.Buttons.RIGHT){
                     soundPick.play()
                 }
             }
