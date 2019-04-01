@@ -32,6 +32,23 @@ class ImagesResources {
         return this.javaClass.getResource("switch_on.png").path
     }
 
+    fun temp_map__to_replaceJPG(): String{
+        return this.javaClass.getResource("temp_map__to_replace.jpg").path
+    }
+
+    fun flameGIF(): String{
+        return this.javaClass.getResource("flame.gif").path
+    }
+
+    fun magnifierPNG(): String{
+        return this.javaClass.getResource("magnifier.png").path
+    }
+
+    fun ringPNG(): String{
+        return this.javaClass.getResource("ring.png").path
+    }
+
+
 }
 
 

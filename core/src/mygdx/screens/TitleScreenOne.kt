@@ -24,6 +24,7 @@ class TitleScreenOne(val _game: Game, val _skin: Skin) : Screen {
         stage = Stage(ScreenViewport())
 
         stage.addActor(createTitleLabel())
+        stage.addActor(createGameScreenGuiButton())
         stage.addActor(createPlayButton())
         stage.addActor(createTestingOneButton())
         stage.addActor(createTestingTwoButton())
@@ -70,13 +71,29 @@ class TitleScreenOne(val _game: Game, val _skin: Skin) : Screen {
         return titleLbl
     }
 
+    private fun createGameScreenGuiButton(): TextButton {
+        var guiTestBtn = TextButton("Gui Test", skin)
+        guiTestBtn.setWidth(Gdx.graphics.getWidth()/2f)
+        guiTestBtn.setPosition(Gdx.graphics.getWidth()/2-guiTestBtn.getWidth()/2,Gdx.graphics.getHeight()/1.8f-guiTestBtn.getHeight()/1.8f)
+        guiTestBtn.addListener(object: InputListener(){
+            override fun touchUp(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int) {
+               game.setScreen(GameScreenGuiTest(game,skin))
+            }
+
+            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+                return true
+            }
+        })
+        return guiTestBtn
+    }
+
     private fun createPlayButton(): TextButton{
-        var playBtn = TextButton("Test", skin)
+        var playBtn = TextButton("Animation test", skin)
         playBtn.setWidth(Gdx.graphics.getWidth()/2f)
         playBtn.setPosition(Gdx.graphics.getWidth()/2-playBtn.getWidth()/2,Gdx.graphics.getHeight()/2-playBtn.getHeight()/2)
         playBtn.addListener(object: InputListener(){
             override fun touchUp(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int) {
-                game.setScreen(GameScreenOne(game, skin))
+                game.setScreen(AnimationScreenTest(game, skin))
             }
             override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
                 return true
@@ -91,7 +108,7 @@ class TitleScreenOne(val _game: Game, val _skin: Skin) : Screen {
         testOneBtn.setPosition(Gdx.graphics.getWidth()/2-testOneBtn.getWidth()/2,Gdx.graphics.getHeight()/2.5f-testOneBtn.getHeight()/2)
         testOneBtn.addListener(object: InputListener(){
             override fun touchUp(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int) {
-                game.setScreen(TestingScreenOne(game,skin))
+                game.setScreen(BasicStuffTestingScreen(game,skin))
             }
             override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
                 return true
@@ -106,7 +123,7 @@ class TitleScreenOne(val _game: Game, val _skin: Skin) : Screen {
         testTwoBtn.setPosition(Gdx.graphics.getWidth()/2-testTwoBtn.getWidth()/2,Gdx.graphics.getHeight()/3-testTwoBtn.getHeight()/2)
         testTwoBtn.addListener(object: InputListener(){
             override fun touchUp(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int) {
-                game.setScreen(TestingScreenTwo(game,skin))
+                game.setScreen(ButtonsTestingScreen(game,skin))
             }
             override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
                 return true

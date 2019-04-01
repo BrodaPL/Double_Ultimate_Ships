@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 
 
-class TestingScreenTwo(val game: Game, val skin: Skin) : Screen {
+class ButtonsTestingScreen(val game: Game, val skin: Skin) : Screen {
     internal lateinit var stage: Stage
     internal lateinit var resources: ImagesResources
     internal lateinit var skins: SkinsResources

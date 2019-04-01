@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import mygdx.enums.TestStates
 
 
-class TestingScreenOne(val game :Game, val skin: Skin) : Screen, InputProcessor {
+class BasicStuffTestingScreen(val game :Game, val skin: Skin) : Screen, InputProcessor {
 
     internal lateinit var batch: SpriteBatch
 
@@ -108,7 +108,7 @@ class TestingScreenOne(val game :Game, val skin: Skin) : Screen, InputProcessor 
                 currentState= TestStates.INPUT
             }else if(Gdx.input.isKeyPressed(Input.Keys.NUM_4)){
                 currentState= TestStates.SOUND
-            }else if(Gdx.input.isKeyPressed(Input.Keys.NUM_0)){
+            }else if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
                 currentState= TestStates.IMAGES
                 if(soundBackground.isPlaying){
                     soundBackground.stop()
@@ -217,7 +217,7 @@ class TestingScreenOne(val game :Game, val skin: Skin) : Screen, InputProcessor 
 
 
     fun drawInfo(){
-        font.draw(batch,"Press 1,2,3,4 to change. Press 0 to exit.",8f, 770f)
+        font.draw(batch,"Press 1,2,3,4 to change. ESC to exit.",8f, 770f)
         font.draw(batch,currentState.name,8f, 738f)
         font.draw(batch, inputVal,8f, 64f)
     }

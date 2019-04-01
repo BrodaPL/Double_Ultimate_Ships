@@ -20,6 +20,7 @@ class OptionScreenOne(val game: Game, val skin: Skin) : Screen{
     init{
         stage = Stage(ScreenViewport())
         stage.addActor(createTitleLabel())
+        stage.addActor(createLabel2())
         stage.addActor(createBackButton())
     }
 
@@ -58,6 +59,14 @@ class OptionScreenOne(val game: Game, val skin: Skin) : Screen{
         var titleLbl = Label("Options Screen", skin, "default");
         titleLbl.setAlignment(Align.center);
         titleLbl.setY(Gdx.graphics.getHeight()*2/3f);
+        titleLbl.setWidth(Gdx.graphics.getWidth().toFloat())
+        return titleLbl
+    }
+
+    private fun createLabel2() : Label{
+        var titleLbl = Label("So many options here...", skin, "default");
+        titleLbl.setAlignment(Align.center);
+        titleLbl.setY(Gdx.graphics.getHeight()*2/4f);
         titleLbl.setWidth(Gdx.graphics.getWidth().toFloat())
         return titleLbl
     }

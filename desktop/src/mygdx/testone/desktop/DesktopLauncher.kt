@@ -2,7 +2,7 @@ package mygdx.testone.desktop
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
-import mygdx.testone.MyGdxScreenTest
+import mygdx.testone.MyGdxGameTest
 
 object DesktopLauncher {
     @JvmStatic
@@ -15,6 +15,6 @@ object DesktopLauncher {
 
 
         //test menu and screens
-        LwjglApplication(MyGdxScreenTest(),config)
+        LwjglApplication(MyGdxGameTest(),config)
     }
 }

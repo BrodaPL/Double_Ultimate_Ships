@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import mygdx.screens.TitleScreenOne
 
-class MyGdxScreenTest : Game() {
+class MyGdxGameTest : Game() {
 
     internal companion object {
         internal lateinit var gameSkin: Skin
