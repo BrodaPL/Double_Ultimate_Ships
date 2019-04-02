@@ -133,7 +133,7 @@ class TitleScreenOne(val _game: Game, val _skin: Skin) : Screen {
     }
 
     private fun createOptionsButton() : TextButton{
-        var optBtn = TextButton("Options test", skin)
+        var optBtn = TextButton("Options and Shader test", skin)
         optBtn.setWidth(Gdx.graphics.getWidth()/2f)
         optBtn.setPosition(Gdx.graphics.getWidth()/2-optBtn.getWidth()/2,Gdx.graphics.getHeight()/4-optBtn.getHeight()/2)
         optBtn.addListener(object : InputListener(){

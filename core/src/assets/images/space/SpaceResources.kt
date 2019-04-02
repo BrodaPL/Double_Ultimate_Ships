@@ -4,7 +4,7 @@ import assets.images.space.ships.ShipsResources
 
 class SpaceResources {
 
-    var ships = ShipsResources()
+    val ships = ShipsResources()
 
     fun asteroidPNG(): String {
         return this.javaClass.getResource("asteroid.png").path

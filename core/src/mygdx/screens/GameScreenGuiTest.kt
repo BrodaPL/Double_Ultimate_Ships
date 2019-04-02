@@ -1,20 +1,21 @@
 package mygdx.screens
 
 import assets.images.ImagesResources
+import assets.shaders.ShadersResources
 import com.badlogic.gdx.*
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g3d.Shader
 import com.badlogic.gdx.math.Interpolation
-import com.badlogic.gdx.scenes.scene2d.Actor
-import com.badlogic.gdx.scenes.scene2d.InputEvent
-import com.badlogic.gdx.scenes.scene2d.InputListener
-import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.*
+import com.badlogic.gdx.scenes.scene2d.actions.Actions
 import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener
 import com.badlogic.gdx.utils.viewport.ScreenViewport
-
+import mygdx.ShockWave
+import mygdx.other.MuzykalnaNuta
 
 
 class GameScreenGuiTest(private val game: Game, private val skin: Skin) : Screen {
@@ -27,23 +28,33 @@ class GameScreenGuiTest(private val game: Game, private val skin: Skin) : Screen
     private var multiplexer: InputMultiplexer
     private var imageResources: ImagesResources
 
+//    private var shockWaveShader: ShockWave
+
     init{
         imageResources = ImagesResources()
+
         gameStage = Stage(ScreenViewport())
         guiStage = Stage(ScreenViewport())
         slider = createGuiSlider()
 
-        multiplexer = InputMultiplexer(guiStage, gameStage)
+        multiplexer = InputMultiplexer(gameStage, guiStage )
 
         camera = gameStage.viewport.camera as OrthographicCamera
         camera.translate(200f,250f)
         camera.zoom= 1.5f
 
-        gameStage.addActor(createPhotoRealisticSea())
+
+
+        gameStage.addActor(createPhotoRealisticSea()) //comment if testing ShockWave shader
         gameStage.addActor(createRing())
+        gameStage.addActor(createMusicalPlanet())
         guiStage.addActor(createGuiMagnifier())
         guiStage.addActor(slider)
         guiStage.addActor(createBackToTitleButton())
+
+        //TODO: shader not working properly
+//        gameStage.addActor(ShockWave.instance)
+//        ShockWave.instance.addActor(createPhotoRealisticSea())
 
         gameStage.addListener(object: InputListener(){
             override fun scrolled(event: InputEvent?, x: Float, y: Float, amount: Int): Boolean {
@@ -103,12 +114,18 @@ class GameScreenGuiTest(private val game: Game, private val skin: Skin) : Screen
 
     private fun createPhotoRealisticSea(): Image{
         var photoRealisticSea = Image(Texture(imageResources.temp_map__to_replaceJPG()))
+        ShockWave.instance.addActor(photoRealisticSea)
         photoRealisticSea.addListener(object: ActorGestureListener(){
             override fun pan(event: InputEvent?, x: Float, y: Float, deltaX: Float, deltaY: Float) {
                 super.pan(event, x, y, deltaX, deltaY)
                 camera.position.x -= (deltaX*Gdx.graphics.density)
                 camera.position.y -= (deltaY*Gdx.graphics.density)
             }
+
+            //TODO: shader not working properly
+//            override fun tap(event: InputEvent?, x: Float, y: Float, count: Int, button: Int) {
+//                ShockWave.instance.start(x,y)
+//            }
         })
 
         return photoRealisticSea
@@ -117,6 +134,7 @@ class GameScreenGuiTest(private val game: Game, private val skin: Skin) : Screen
     private fun createRing(): Image{
         var img = Image(Texture(imageResources.ringPNG()))
         img.setPosition(900f,900f)
+
         img.addListener(object: InputListener(){
             override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
                 img.setSize((button+0.5f)*img.imageWidth,(button+0.5f)*img.imageHeight)
@@ -138,6 +156,17 @@ class GameScreenGuiTest(private val game: Game, private val skin: Skin) : Screen
                 super.drag(event, x, y, pointer)
             }
         })
+
+        return img
+    }
+
+    private fun createMusicalPlanet(): Image{
+        var img = MuzykalnaNuta(Texture(imageResources.space.uranusPNG()))
+        img.setSize(img.width/2f,img.width/2f)
+        img.setPosition(1500f,100f)
+        img.addAction(Actions.repeat(-1,Actions.sequence(Actions.moveTo(Gdx.graphics.width*3/5f,Gdx.graphics.height*3/5f,2f, Interpolation.sine) ,
+                                                               Actions.moveTo(Gdx.graphics.width*3/5f,Gdx.graphics.height*1/5f,2f, Interpolation.sine),
+                                                                Actions.moveTo(1500f,100f,2f, Interpolation.sine))))
 
         return img
     }

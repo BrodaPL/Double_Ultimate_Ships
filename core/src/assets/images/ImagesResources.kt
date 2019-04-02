@@ -1,16 +1,21 @@
 package assets.images
 
+import assets.images.particles.ParticlesResources
 import assets.images.space.SpaceResources
 
 
 /*
 * Icons from Icons made by https://www.freepik.com/ from  https://www.flaticon.com/	.
 * Flaticon is licensed by http://creativecommons.org/licenses/by/3.0/
+*
+* Other images from https://libgdx.info/ tutorial.
 */
 
 class ImagesResources {
 
-    var space = SpaceResources()
+    val space = SpaceResources()
+
+    val particles = ParticlesResources()
 
     fun badlogicJPG(): String {
         return this.javaClass.getResource("badlogic.jpg").path

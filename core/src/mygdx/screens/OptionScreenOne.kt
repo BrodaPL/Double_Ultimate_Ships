@@ -1,24 +1,43 @@
 package mygdx.screens
 
+import assets.images.ImagesResources
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.ScreenViewport
+import mygdx.ShockWave
 
 class OptionScreenOne(val game: Game, val skin: Skin) : Screen{
 
     internal var stage: Stage
+    val imagesResources: ImagesResources
+
 
     init{
+        imagesResources = ImagesResources()
         stage = Stage(ScreenViewport())
+        stage.addActor(ShockWave.instance)
+        var background = Image(Texture(imagesResources.temp_map__to_replaceJPG()))
+        background.addListener(object: ClickListener(){
+            override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                ShockWave.instance.start(x,y)
+                super.clicked(event, x, y)
+            }
+        })
+
+        ShockWave.instance.addActor(background)
+//        stage.addActor(background)
         stage.addActor(createTitleLabel())
         stage.addActor(createLabel2())
         stage.addActor(createBackButton())
@@ -56,7 +75,7 @@ class OptionScreenOne(val game: Game, val skin: Skin) : Screen{
     }
 
     private fun createTitleLabel() : Label{
-        var titleLbl = Label("Options Screen", skin, "default");
+        var titleLbl = Label("Options Screen", skin, "default-black");
         titleLbl.setAlignment(Align.center);
         titleLbl.setY(Gdx.graphics.getHeight()*2/3f);
         titleLbl.setWidth(Gdx.graphics.getWidth().toFloat())
@@ -64,7 +83,7 @@ class OptionScreenOne(val game: Game, val skin: Skin) : Screen{
     }
 
     private fun createLabel2() : Label{
-        var titleLbl = Label("So many options here...", skin, "default");
+        var titleLbl = Label("So many options here...", skin, "default-black");
         titleLbl.setAlignment(Align.center);
         titleLbl.setY(Gdx.graphics.getHeight()*2/4f);
         titleLbl.setWidth(Gdx.graphics.getWidth().toFloat())

@@ -23,6 +23,12 @@ com.badlogic.gdx.graphics.Color: {
 		b: .4
 		a: 1
 	}
+	my-black: {
+		r: .580392156
+		g: .580392156
+		b: .580392156
+		a: 1
+	}
 	text: {
 		r: .580392156
 		g: 1
@@ -284,6 +290,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: font
 		fontColor: text
+	}
+	default-black: {
+		font: font
+		fontColor: my-black
 	}
 	over: {
 		font: font-over
