@@ -30,8 +30,8 @@ class AnimationScreenTest(private val game: Game, private val skin: Skin) : Scre
 
     internal val imagesRes = ImagesResources()
 
-    private val startPoint = Point(800,800) // X -Gdx.graphics.getWidth()/2;
-    private val endPoint = Point(1600,400) // X -Gdx.graphics.getWidth()/2;
+    private val startPoint = Point(800,800) // X -Gdx.graphics.getFieldWidth()/2;
+    private val endPoint = Point(1600,400) // X -Gdx.graphics.getFieldWidth()/2;
 
     private val minAltitude = 0.5f
     private val maxAltitude = 2.5f

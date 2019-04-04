@@ -197,10 +197,13 @@ class BasicStuffTestingScreen(val game :Game, val skin: Skin) : Screen, InputPro
     /**
      * SLOW AS F*@#, do not use
      */
-    fun createPixmapTexture(x: Int, y:Int): Texture {
-        var pixmap = Pixmap(x,y, Pixmap.Format.RGBA8888)
+    fun createPixmapTexture(width: Int, height:Int): Texture {
+        var pixmap = Pixmap(width,height, Pixmap.Format.RGBA8888)
+
+        //coment to make it transparent
         pixmap.setColor(Color.BLUE)
         pixmap.fill()
+
 
         pixmap.setColor(Color.BLACK)
         pixmap.drawLine(0, 0, pixmap.getWidth()-1, pixmap.getHeight()-1)

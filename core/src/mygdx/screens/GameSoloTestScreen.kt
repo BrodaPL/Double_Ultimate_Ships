@@ -4,10 +4,13 @@ import assets.tempStuff.images.ImagesResources
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.Screen
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Interpolation
+import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -15,7 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import mygdx.DoubleUltimateShips
-
+import mygdx.GridCreator
+import java.util.*
 
 
 class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
@@ -28,12 +32,12 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
     private var slider: Slider
     private var multiplexer: InputMultiplexer
     private var imageResources: ImagesResources
-
-//    private var shockWaveShader: ShockWave
+    private var gridCreator: GridCreator
 
     init{
         imageResources = ImagesResources()
         skin =game.gameSkin
+        gridCreator = GridCreator(64,Color.BLACK, BitmapFont(Gdx.files.internal(game.fonts.stencilFNT())) )
 
         gameStage = Stage(ScreenViewport())
         guiStage = Stage(ScreenViewport())
@@ -47,14 +51,12 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
 
 
 
-        gameStage.addActor(createPhotoRealisticSea()) //comment if testing ShockWave shader
+        gameStage.addActor(createPhotoRealisticSea())
+        gameStage.addActor(createGrid(200f,100f,26,26))
         guiStage.addActor(createPlayerNameLabel())
         guiStage.addActor(slider)
         guiStage.addActor(createBackToTitleButton())
 
-        //TODO: shader not working properly
-//        gameStage.addActor(ShockWave.instance)
-//        ShockWave.instance.addActor(createPhotoRealisticSea())
 
         gameStage.addListener(object: InputListener(){
             override fun scrolled(event: InputEvent?, x: Float, y: Float, amount: Int): Boolean {
@@ -66,7 +68,6 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
 
 
     }
-
 
 
     override fun show() {
@@ -113,23 +114,30 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
 
     private fun createPhotoRealisticSea(): Image {
         var photoRealisticSea = Image(Texture(imageResources.temp_map__to_replaceJPG()))
-//        ShockWave.instance.addActor(photoRealisticSea)
         photoRealisticSea.addListener(object: ActorGestureListener(){
             override fun pan(event: InputEvent?, x: Float, y: Float, deltaX: Float, deltaY: Float) {
                 super.pan(event, x, y, deltaX, deltaY)
                 camera.position.x -= (deltaX* Gdx.graphics.density)
                 camera.position.y -= (deltaY* Gdx.graphics.density)
             }
-
-            //TODO: shader not working properly
-//            override fun tap(event: InputEvent?, x: Float, y: Float, count: Int, button: Int) {
-//                ShockWave.instance.start(x,y)
-//            }
         })
 
         return photoRealisticSea
     }
 
+
+    private fun createGrid(x: Float, y: Float, rows: Int, colls: Int): Group {
+        var group = gridCreator.makeLabeledGrid(x,y,rows,colls)
+        group.setPosition(x, y)
+        group.addListener(object: ActorGestureListener(){
+            override fun pan(event: InputEvent?, x: Float, y: Float, deltaX: Float, deltaY: Float) {
+                super.pan(event, x, y, deltaX, deltaY)
+                camera.position.x -= (deltaX* Gdx.graphics.density)
+                camera.position.y -= (deltaY* Gdx.graphics.density)
+            }
+        })
+        return group
+    }
 
 
     private fun createPlayerNameLabel(): Label {
