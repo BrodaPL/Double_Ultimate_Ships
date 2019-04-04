@@ -60,17 +60,18 @@ class GridCreator(val fieldWidth: Int, val color: Color, val font: BitmapFont){
 
         var group = Group()
         var grid = createEmptyGrid(rows, colls)
+        grid.setName("grid1")
         grid.setPosition(x, y)
 
         group.addActor(grid)
         val labelStyle1 = Label.LabelStyle(font, color)
 
-        var rowLabel = rows
+        var rowLabel = 1
         for (i in 1..rows) {
             var label = Label(rowLabel.toString(), labelStyle1)
             label.setPosition(x, (i-1) * fieldWidth + y + spaceAfterLines)
             group.addActor(label)
-            rowLabel--
+            rowLabel++
         }
 
         for (i in 1..colls) {

@@ -4,10 +4,7 @@ import assets.tempStuff.images.ImagesResources
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.Screen
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.*
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.scenes.scene2d.Group
@@ -24,6 +21,8 @@ import java.util.*
 
 class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
 
+    private val FIELD_WIDTH = 64
+
     private var gameStage: Stage
     private var guiStage: Stage
     private var camera: OrthographicCamera
@@ -34,10 +33,12 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
     private var imageResources: ImagesResources
     private var gridCreator: GridCreator
 
+    private var selectionBox = createSelectedBox()
+
     init{
         imageResources = ImagesResources()
         skin =game.gameSkin
-        gridCreator = GridCreator(64,Color.BLACK, BitmapFont(Gdx.files.internal(game.fonts.stencilFNT())) )
+        gridCreator = GridCreator(FIELD_WIDTH,Color.BLACK, BitmapFont(Gdx.files.internal(game.fonts.stencilFNT())) )
 
         gameStage = Stage(ScreenViewport())
         guiStage = Stage(ScreenViewport())
@@ -51,8 +52,11 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
 
 
 
+
+
         gameStage.addActor(createPhotoRealisticSea())
-        gameStage.addActor(createGrid(200f,100f,26,26))
+        gameStage.addActor(createGrid(200f,100f,8,12))
+        gameStage.addActor(selectionBox)
         guiStage.addActor(createPlayerNameLabel())
         guiStage.addActor(slider)
         guiStage.addActor(createBackToTitleButton())
@@ -129,11 +133,34 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
     private fun createGrid(x: Float, y: Float, rows: Int, colls: Int): Group {
         var group = gridCreator.makeLabeledGrid(x,y,rows,colls)
         group.setPosition(x, y)
+        val grid = group.findActor<Image>("grid1")
+
         group.addListener(object: ActorGestureListener(){
             override fun pan(event: InputEvent?, x: Float, y: Float, deltaX: Float, deltaY: Float) {
                 super.pan(event, x, y, deltaX, deltaY)
                 camera.position.x -= (deltaX* Gdx.graphics.density)
                 camera.position.y -= (deltaY* Gdx.graphics.density)
+            }
+
+            override fun tap(event: InputEvent?, x: Float, y: Float, count: Int, button: Int) {
+                super.tap(event, x, y, count, button)
+
+                if(x in grid.x..(grid.x+grid.width) && y in grid.y..(grid.y+grid.height)){
+                    selectionBox.setVisible(true)
+
+                    val cordX = (x-grid.x).toInt()/FIELD_WIDTH
+                    val cordY = (y-grid.y).toInt()/FIELD_WIDTH
+                    Gdx.app.log("name:"+grid.name,"cordX:"+cordX+" cordY:"+cordY)
+
+                    val targetX = cordX*FIELD_WIDTH+grid.x*2 -gridCreator.thickness
+                    val targetY = cordY*FIELD_WIDTH+grid.y*2
+                    Gdx.app.log("name:"+grid.name,"targetX:"+targetX+" targetY:"+targetY)
+                    Gdx.app.log("name:"+grid.name,"gridX:"+grid.x+" gridY:"+grid.y)
+
+                    selectionBox.setPosition(targetX,targetY)
+
+                }
+                Gdx.app.log("name:"+grid.name,"x:"+(x)+" y:"+(y))
             }
         })
         return group
@@ -184,5 +211,18 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
             }
         })
         return btn
+    }
+
+    private fun createSelectedBox(): Image{
+        var pixmap = Pixmap(FIELD_WIDTH+2, FIELD_WIDTH+2, Pixmap.Format.RGBA4444)
+        pixmap.setColor(Color.YELLOW)
+
+        pixmap.drawRectangle(0,0,FIELD_WIDTH+2-1,FIELD_WIDTH+2-1)
+        pixmap.drawRectangle(1,1,FIELD_WIDTH+2-3,FIELD_WIDTH+2-3)
+        pixmap.drawRectangle(2,2,FIELD_WIDTH+2-5,FIELD_WIDTH+2-5)
+        pixmap.drawRectangle(3,3,FIELD_WIDTH+2-7,FIELD_WIDTH+2-7)
+
+
+        return Image(Texture(pixmap))
     }
 }
