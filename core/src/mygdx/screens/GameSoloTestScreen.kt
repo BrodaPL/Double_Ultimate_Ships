@@ -7,7 +7,6 @@ import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.*
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.math.Interpolation
-import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.Stage
@@ -16,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import mygdx.DoubleUltimateShips
 import mygdx.GridCreator
-import java.util.*
 
 
 class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
@@ -28,10 +26,13 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
     private var camera: OrthographicCamera
     private val skin: Skin
 
+
     private var slider: Slider
     private var multiplexer: InputMultiplexer
     private var imageResources: ImagesResources
     private var gridCreator: GridCreator
+
+    private val grid1: GridCreator.Grid
 
     private var selectionBox: Image
 
@@ -56,8 +57,10 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
 
 
         gameStage.addActor(createPhotoRealisticSea())
-        gameStage.addActor(createGrid(200f,100f,8,12))
+        grid1 = createGrid(200f,100f,8,12)
+        gameStage.addActor(grid1)
         gameStage.addActor(selectionBox)
+        guiStage.addActor(createRandomSelectionButton())
         guiStage.addActor(createPlayerNameLabel())
         guiStage.addActor(slider)
         guiStage.addActor(createBackToTitleButton())
@@ -131,12 +134,12 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
     }
 
 
-    private fun createGrid(x: Float, y: Float, rows: Int, colls: Int): Group {
-        var group = gridCreator.makeLabeledGrid(x,y,rows,colls)
-        group.setPosition(x, y)
-        val grid = group.findActor<Image>("grid1")
+    private fun createGrid(x: Float, y: Float, rows: Int, colls: Int): GridCreator.Grid {
+        var grid = gridCreator.makeLabeledGrid(x,y,rows,colls)
+        grid.setPosition(x, y)
+        val board = grid.board
 
-        group.addListener(object: ActorGestureListener(){
+        grid.addListener(object: ActorGestureListener(){
             override fun pan(event: InputEvent?, x: Float, y: Float, deltaX: Float, deltaY: Float) {
                 super.pan(event, x, y, deltaX, deltaY)
                 camera.position.x -= (deltaX* Gdx.graphics.density)
@@ -146,15 +149,15 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
             override fun tap(event: InputEvent?, x: Float, y: Float, count: Int, button: Int) {
                 super.tap(event, x, y, count, button)
 
-                if(x in grid.x..(grid.x+grid.width) && y in grid.y..(grid.y+grid.height)){
+                if(x in board.x..(board.x+board.width) && y in board.y..(board.y+board.height)){
                     selectionBox.setVisible(true)
 
-                    val cordX = (x-grid.x).toInt()/FIELD_WIDTH
-                    val cordY = (y-grid.y).toInt()/FIELD_WIDTH
-                    Gdx.app.log("name:"+grid.name,"cordX:"+cordX+" cordY:"+cordY)
+                    val cordX = (x-board.x).toInt()/FIELD_WIDTH
+                    val cordY = (y-board.y).toInt()/FIELD_WIDTH
+                    Gdx.app.log("name:"+board.name,"cordX:"+cordX+" cordY:"+cordY)
 
-                    val targetX = cordX*FIELD_WIDTH+grid.x*2 -gridCreator.thickness
-                    val targetY = cordY*FIELD_WIDTH+grid.y*2 -gridCreator.thickness-1
+                    val targetX = cordX*FIELD_WIDTH+board.x*2 -gridCreator.thickness
+                    val targetY = cordY*FIELD_WIDTH+board.y*2 -gridCreator.thickness-1
 
 //                    Gdx.app.log("name:"+grid.name,"targetX:"+targetX+" targetY:"+targetY)
 //                    Gdx.app.log("name:"+grid.name,"gridX:"+grid.x+" gridY:"+grid.y)
@@ -166,7 +169,7 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
 
             }
         })
-        return group
+        return grid
     }
 
 
@@ -214,6 +217,27 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
             }
         })
         return btn
+    }
+
+    private fun createRandomSelectionButton(): TextButton{
+        var btn = TextButton("Select random field", skin)
+        btn.width = (Gdx.graphics.width / 3.5f)
+        btn.setPosition(0f, Gdx.graphics.height.toFloat()-btn.height)
+        btn.addListener(object : InputListener() {
+            override fun touchUp(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int) {
+                selectRandomField(grid1)
+            }
+            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+                return true
+            }
+        })
+        return btn
+    }
+
+    private fun selectRandomField(grid: GridCreator.Grid){
+        val targetX = (0..grid.colls).random()*FIELD_WIDTH+grid.x*2 -gridCreator.thickness
+        val targetY = (0..grid.rows).random()*FIELD_WIDTH+grid.y*2 -gridCreator.thickness-1
+        selectionBox.setPosition(targetX,targetY)
     }
 
     private fun createSelectedBox(): Image{

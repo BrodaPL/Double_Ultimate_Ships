@@ -49,7 +49,7 @@ class GridCreator(val fieldWidth: Int, val color: Color, val font: BitmapFont){
     }
 
     @Throws(IllegalArgumentException::class)
-    fun makeLabeledGrid( x: Float, y: Float, rows: Int, colls: Int): Group {
+    fun makeLabeledGrid(x: Float, y: Float, rows: Int, colls: Int): Grid {
 
         if(colls>26){
             throw IllegalArgumentException("There can not be more than 26 collumns!")
@@ -58,12 +58,10 @@ class GridCreator(val fieldWidth: Int, val color: Color, val font: BitmapFont){
             throw IllegalArgumentException("There can not be more than 40 rows!")
         }
 
-        var group = Group()
-        var grid = createEmptyGrid(rows, colls)
-        grid.setName("grid1")
-        grid.setPosition(x, y)
+        var grid = Grid(createEmptyGrid(rows, colls),rows,colls)
+        grid.board.setPosition(x, y)
 
-        group.addActor(grid)
+        grid.addActor(grid.board)
         val labelStyle1 = Label.LabelStyle(font, color)
 
         //digits
@@ -71,7 +69,7 @@ class GridCreator(val fieldWidth: Int, val color: Color, val font: BitmapFont){
         for (i in 1..rows) {
             var label = Label(rowLabel.toString(), labelStyle1)
             label.setPosition(x, (i) * fieldWidth + y + spaceAfterLines)
-            group.addActor(label)
+            grid.addActor(label)
             rowLabel++
         }
 
@@ -79,10 +77,14 @@ class GridCreator(val fieldWidth: Int, val color: Color, val font: BitmapFont){
         for (i in 1..colls) {
             var label = Label(((i + 64).toChar()).toString(), labelStyle1)
             label.setPosition((i) * fieldWidth + x + spaceAfterLines, y)
-            group.addActor(label)
+            grid.addActor(label)
         }
 
-        return group
+        return grid
+    }
+
+    public class Grid(var board: Image ,val rows:Int, val colls:Int) : Group(){
+
     }
 
 }

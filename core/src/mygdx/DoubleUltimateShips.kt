@@ -16,7 +16,6 @@ class DoubleUltimateShips : Game() {
     val fonts = FontsResources()
     internal lateinit var gameSkin: Skin
 
-
     override fun create() {
         config = DusConfig()
         gameSkin = Skin(Gdx.files.internal(skins.neon.skin.neon_uiJSON()))
