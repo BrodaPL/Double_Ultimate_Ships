@@ -205,7 +205,7 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
     }
 
     private fun createBackToTitleButton(): TextButton {
-        var btn = TextButton("Back to main menu", skin)
+        var btn = TextButton(game.labels.getString("button.back.main.menu"), skin)
         btn.width = (Gdx.graphics.width / 3).toFloat()
         btn.setPosition(Gdx.graphics.width / 2 - btn.width / 2, Gdx.graphics.height / 24 - btn.height / 2)
         btn.addListener(object : InputListener() {
@@ -220,7 +220,7 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
     }
 
     private fun createRandomSelectionButton(): TextButton{
-        var btn = TextButton("Select random field", skin)
+        var btn = TextButton(game.labels.getString("game.screen.select.random.field"), skin)
         btn.width = (Gdx.graphics.width / 3.5f)
         btn.setPosition(0f, Gdx.graphics.height.toFloat()-btn.height)
         btn.addListener(object : InputListener() {

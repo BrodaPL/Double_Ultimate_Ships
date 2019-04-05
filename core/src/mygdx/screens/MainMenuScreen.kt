@@ -74,7 +74,7 @@ class MainMenuScreen(val _game: DoubleUltimateShips) : Screen {
     }
 
     private fun createPlaySoloButton(): TextButton {
-        var guiTestBtn = TextButton("Play Solo", skin)
+        var guiTestBtn = TextButton(game.labels.getString("main.menu.play.solo"), skin)
         guiTestBtn.setWidth(Gdx.graphics.getWidth()/2f)
         guiTestBtn.setPosition(Gdx.graphics.getWidth()/2-guiTestBtn.getWidth()/2, Gdx.graphics.getHeight()/1.8f-guiTestBtn.getHeight()/1.8f)
         guiTestBtn.addListener(object: InputListener(){
@@ -90,7 +90,7 @@ class MainMenuScreen(val _game: DoubleUltimateShips) : Screen {
     }
 
     private fun createPlayLanButton(): TextButton {
-        var playBtn = TextButton("Play LAN", skin)
+        var playBtn = TextButton(game.labels.getString("main.menu.play.lan"), skin)
         playBtn.setWidth(Gdx.graphics.getWidth()/2f)
         playBtn.setPosition(Gdx.graphics.getWidth()/2-playBtn.getWidth()/2, Gdx.graphics.getHeight()/2-playBtn.getHeight()/2)
         playBtn.addListener(object: InputListener(){
@@ -110,7 +110,7 @@ class MainMenuScreen(val _game: DoubleUltimateShips) : Screen {
 
 
     private fun createOptionsButton() : TextButton {
-        var optBtn = TextButton("Options", skin)
+        var optBtn = TextButton(game.labels.getString("main.menu.options"), skin)
         optBtn.setWidth(Gdx.graphics.getWidth()/2f)
         optBtn.setPosition(Gdx.graphics.getWidth()/2-optBtn.getWidth()/2, Gdx.graphics.getHeight()/4-optBtn.getHeight()/2)
         optBtn.addListener(object : InputListener(){
@@ -126,7 +126,7 @@ class MainMenuScreen(val _game: DoubleUltimateShips) : Screen {
     }
 
     private fun createTestingStuffButton() : TextButton {
-        var optBtn = TextButton("Testing stuff", skin)
+        var optBtn = TextButton(game.labels.getString("main.menu.testing.stuff"), skin)
         optBtn.setWidth(Gdx.graphics.getWidth()/4f)
         optBtn.setPosition(Gdx.graphics.getWidth()/4-optBtn.getWidth()/4, Gdx.graphics.getHeight()/24-optBtn.getHeight()/2)
         optBtn.addListener(object : InputListener(){
