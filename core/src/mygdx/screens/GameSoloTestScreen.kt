@@ -33,12 +33,13 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
     private var imageResources: ImagesResources
     private var gridCreator: GridCreator
 
-    private var selectionBox = createSelectedBox()
+    private var selectionBox: Image
 
     init{
         imageResources = ImagesResources()
         skin =game.gameSkin
         gridCreator = GridCreator(FIELD_WIDTH,Color.BLACK, BitmapFont(Gdx.files.internal(game.fonts.stencilFNT())) )
+        selectionBox = createSelectedBox()
 
         gameStage = Stage(ScreenViewport())
         guiStage = Stage(ScreenViewport())
@@ -153,14 +154,16 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
                     Gdx.app.log("name:"+grid.name,"cordX:"+cordX+" cordY:"+cordY)
 
                     val targetX = cordX*FIELD_WIDTH+grid.x*2 -gridCreator.thickness
-                    val targetY = cordY*FIELD_WIDTH+grid.y*2
-                    Gdx.app.log("name:"+grid.name,"targetX:"+targetX+" targetY:"+targetY)
-                    Gdx.app.log("name:"+grid.name,"gridX:"+grid.x+" gridY:"+grid.y)
+                    val targetY = cordY*FIELD_WIDTH+grid.y*2 -gridCreator.thickness-1
+
+//                    Gdx.app.log("name:"+grid.name,"targetX:"+targetX+" targetY:"+targetY)
+//                    Gdx.app.log("name:"+grid.name,"gridX:"+grid.x+" gridY:"+grid.y)
+//                    Gdx.app.log("name:"+grid.name,"x:"+(x)+" y:"+(y))
 
                     selectionBox.setPosition(targetX,targetY)
 
                 }
-                Gdx.app.log("name:"+grid.name,"x:"+(x)+" y:"+(y))
+
             }
         })
         return group
@@ -214,14 +217,15 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
     }
 
     private fun createSelectedBox(): Image{
-        var pixmap = Pixmap(FIELD_WIDTH+2, FIELD_WIDTH+2, Pixmap.Format.RGBA4444)
+        val thickenss = gridCreator.thickness
+        var pixmap = Pixmap(FIELD_WIDTH+thickenss, FIELD_WIDTH+thickenss, Pixmap.Format.RGBA4444)
+        val max = FIELD_WIDTH+thickenss -1
+
         pixmap.setColor(Color.YELLOW)
 
-        pixmap.drawRectangle(0,0,FIELD_WIDTH+2-1,FIELD_WIDTH+2-1)
-        pixmap.drawRectangle(1,1,FIELD_WIDTH+2-3,FIELD_WIDTH+2-3)
-        pixmap.drawRectangle(2,2,FIELD_WIDTH+2-5,FIELD_WIDTH+2-5)
-        pixmap.drawRectangle(3,3,FIELD_WIDTH+2-7,FIELD_WIDTH+2-7)
-
+        for(i in 0..gridCreator.thickness+1) {
+            pixmap.drawRectangle(0+i, 0+i, max-i*2 ,max-i*2)
+        }
 
         return Image(Texture(pixmap))
     }

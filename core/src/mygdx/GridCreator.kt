@@ -28,9 +28,9 @@ class GridCreator(val fieldWidth: Int, val color: Color, val font: BitmapFont){
                 pixmap.drawLine(i*fieldWidth-n-1 ,maxY,i*fieldWidth-n-1,0)
             }
         }
-        for(i in 1..rows+1){
+        for(i in 0..rows){
             for(n in 0..thickness){
-                pixmap.drawLine(0,i*fieldWidth-n-1 ,maxX,i*fieldWidth-n-1)
+                pixmap.drawLine(0,i*fieldWidth+n ,maxX,i*fieldWidth+n)
             }
         }
 
@@ -66,46 +66,23 @@ class GridCreator(val fieldWidth: Int, val color: Color, val font: BitmapFont){
         group.addActor(grid)
         val labelStyle1 = Label.LabelStyle(font, color)
 
+        //digits
         var rowLabel = 1
         for (i in 1..rows) {
             var label = Label(rowLabel.toString(), labelStyle1)
-            label.setPosition(x, (i-1) * fieldWidth + y + spaceAfterLines)
+            label.setPosition(x, (i) * fieldWidth + y + spaceAfterLines)
             group.addActor(label)
             rowLabel++
         }
 
+        //chars
         for (i in 1..colls) {
             var label = Label(((i + 64).toChar()).toString(), labelStyle1)
-            label.setPosition((i) * fieldWidth + x + spaceAfterLines, y + grid.height - fieldWidth + fieldWidth/2)
+            label.setPosition((i) * fieldWidth + x + spaceAfterLines, y)
             group.addActor(label)
         }
 
         return group
     }
-
-//DRAWING FONT GLYPH ON PIXMAP
-//    private fun regionToPixmap(): Pixmap{
-//        var wynPixmap = Pixmap(fieldWidth,fieldWidth,Pixmap.Format.RGBA8888)
-//        var colorInt : Int
-//
-//        val glyph_A = font.data.getGlyph('A')
-//        val page = font.getRegion(glyph_A.page)
-//        val glyph_A_textureRegion = TextureRegion(page.getTexture(), glyph_A.u, glyph_A.v, glyph_A.u2, glyph_A.v2)
-//
-//        var textureA = page.getTexture()
-//        if (!textureA.getTextureData().isPrepared()) {
-//            textureA.getTextureData().prepare();
-//        }
-//        val pixmapA = textureA.textureData.consumePixmap()
-//
-//        for(x in 0..glyph_A_textureRegion.regionWidth){
-//            for(y in 0..glyph_A_textureRegion.regionHeight){
-//                colorInt = pixmapA.getPixel(glyph_A_textureRegion.getRegionX() +x, glyph_A_textureRegion.getRegionY() +y)
-//                wynPixmap.drawPixel(x,y,colorInt)
-//            }
-//        }
-//
-//        return wynPixmap
-//    }
 
 }
