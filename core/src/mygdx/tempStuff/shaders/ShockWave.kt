@@ -13,9 +13,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.scenes.scene2d.Group
 
-
-
-//TODO Initial stuff. Not working yet.
+// TODO Initial stuff. Not working yet.
 class ShockWave : Group() {
     private var shaderResources: ShadersResources
 
@@ -30,7 +28,6 @@ class ShockWave : Group() {
     private var shockWavePositionX: Float = 0.toFloat()
     private var shockWavePositionY: Float = 0.toFloat()
 
-
     companion object {
         var instance = ShockWave()
     }
@@ -43,7 +40,6 @@ class ShockWave : Group() {
 //        }
 //        return shockWave;
 //    }
-
 
     init {
         shaderResources = ShadersResources()
@@ -65,7 +61,6 @@ class ShockWave : Group() {
         this.addAction(Actions.delay(1f, enable))
         disabled = false
         time = 0f
-
     }
 
     override fun act(delta: Float) {
@@ -103,5 +98,4 @@ class ShockWave : Group() {
             batch.shader = null
         }
     }
-
 }

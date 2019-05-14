@@ -2,7 +2,6 @@ package assets.tempStuff.shaders.shockWave
 
 class ShockWaveResources {
 
-
     fun fragmentGLSL(): String {
         return this.javaClass.getResource("fragment.glsl").path
     }

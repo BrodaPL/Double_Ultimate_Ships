@@ -1,5 +1,5 @@
 package mygdx
 
-class DusConfig{
+class DusConfig {
     val playerName = "Player1"
 }

@@ -2,9 +2,7 @@ package assets.tempStuff.shaders
 
 import assets.tempStuff.shaders.shockWave.ShockWaveResources
 
-class ShadersResources{
+class ShadersResources {
 
     val shockWave = ShockWaveResources()
-
 }
-

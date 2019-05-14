@@ -6,7 +6,6 @@ package assets.tempStuff.sounds
 
 class SoundssResources {
 
-
     fun chipfork_laser01revWAV(): String {
         return this.javaClass.getResource("chipfork_laser01rev.wav").path
     }
@@ -22,8 +21,4 @@ class SoundssResources {
     fun dzcozamanisAtlanticOceanInKeyWestMP3(): String {
         return this.javaClass.getResource("dzcozamanis_atlantic-ocean-in-key-west.mp3").path
     }
-
 }
-
-
-

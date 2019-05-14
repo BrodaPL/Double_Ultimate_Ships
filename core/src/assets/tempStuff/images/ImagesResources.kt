@@ -3,7 +3,6 @@ package assets.tempStuff.images
 import assets.tempStuff.images.particles.ParticlesResources
 import assets.tempStuff.images.space.SpaceResources
 
-
 /*
 * Icons from Icons made by https://www.freepik.com/ from  https://www.flaticon.com/	.
 * Flaticon is licensed by http://creativecommons.org/licenses/by/3.0/
@@ -37,24 +36,19 @@ class ImagesResources {
         return this.javaClass.getResource("switch_on.png").path
     }
 
-    fun temp_map__to_replaceJPG(): String{
+    fun temp_map__to_replaceJPG(): String {
         return this.javaClass.getResource("temp_map__to_replace.jpg").path
     }
 
-    fun flameGIF(): String{
+    fun flameGIF(): String {
         return this.javaClass.getResource("flame.gif").path
     }
 
-    fun magnifierPNG(): String{
+    fun magnifierPNG(): String {
         return this.javaClass.getResource("magnifier.png").path
     }
 
-    fun ringPNG(): String{
+    fun ringPNG(): String {
         return this.javaClass.getResource("ring.png").path
     }
-
-
 }
-
-
-

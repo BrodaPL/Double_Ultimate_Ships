@@ -17,5 +17,4 @@ class SpaceResources {
     fun uranusPNG(): String {
         return this.javaClass.getResource("uranus.png").path
     }
-
 }

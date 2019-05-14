@@ -5,5 +5,4 @@ class SkinResources {
     fun neon_uiJSON(): String {
         return this.javaClass.getResource("neon-ui.json").path
     }
-
 }
