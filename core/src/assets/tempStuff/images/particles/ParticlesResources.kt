@@ -1,6 +1,6 @@
 package assets.tempStuff.images.particles
 
-class ParticlesResources{
+class ParticlesResources {
 
     fun bubleNoteP(): String {
         return this.javaClass.getResource("bubleNote.p").path

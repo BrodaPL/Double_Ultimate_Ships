@@ -9,18 +9,18 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 
-class MuzykalnaNuta(texture: Texture) : Image(texture){
+class MuzykalnaNuta(texture: Texture) : Image(texture) {
 
     var effect: ParticleEffect
-    val imagesResources=  ImagesResources()
+    val imagesResources = ImagesResources()
 
-    init{
+    init {
         effect = ParticleEffect()
         var textureAtlas = TextureAtlas()
-        textureAtlas.addRegion("note",TextureRegion(texture))
+        textureAtlas.addRegion("note", TextureRegion(texture))
         effect.load(Gdx.files.internal(imagesResources.particles.bubleNoteP()), textureAtlas)
         effect.start()
-        effect.setPosition(this.getWidth()/2+this.getX(),this.getHeight()/2+this.getY())
+        effect.setPosition(this.getWidth() / 2 + this.getX(), this.getHeight() / 2 + this.getY())
     }
 
     override fun draw(batch: Batch?, parentAlpha: Float) {
@@ -30,7 +30,7 @@ class MuzykalnaNuta(texture: Texture) : Image(texture){
 
     override fun act(delta: Float) {
         super.act(delta)
-        effect.setPosition(this.getWidth()/2+this.getX(),this.getHeight()/2+this.getY());
-        effect.update(delta);
+        effect.setPosition(this.getWidth() / 2 + this.getX(), this.getHeight() / 2 + this.getY())
+        effect.update(delta)
     }
 }

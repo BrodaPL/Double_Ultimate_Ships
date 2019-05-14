@@ -13,8 +13,7 @@ object DesktopLauncher {
         config.height = 800
         config.width = 600
 
-
-        //test menu and screens
-        LwjglApplication(DoubleUltimateShips(),config)
+        // test menu and screens
+        LwjglApplication(DoubleUltimateShips(), config)
     }
 }

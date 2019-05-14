@@ -9,17 +9,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import mygdx.screens.MainMenuScreen
 import java.util.*
 
-
 class DoubleUltimateShips : Game() {
 
-    lateinit var  config: DusConfig
+    lateinit var config: DusConfig
     val skins = SkinsResources()
     val images = ImagesResources()
     val fonts = FontsResources()
-    var labels : ResourceBundle
+    var labels: ResourceBundle
     internal lateinit var gameSkin: Skin
 
-    init{
+    init {
 //        Locale.setDefault(Locale("pl","PL"))
         labels = ResourceBundle.getBundle("assets/labels/DusLabels")
     }
@@ -29,8 +28,8 @@ class DoubleUltimateShips : Game() {
         gameSkin = Skin(Gdx.files.internal(skins.neon.skin.neon_uiJSON()))
         this.setScreen(MainMenuScreen(this))
 
-        Gdx.app.log("DUS", "Current Locale:"+ Locale.getDefault())
-        Gdx.app.log("DUS", "Current Language is:"+ labels.getString("game.language"))
+        Gdx.app.log("DUS", "Current Locale:" + Locale.getDefault())
+        Gdx.app.log("DUS", "Current Language is:" + labels.getString("game.language"))
     }
 
     override fun render() {
@@ -40,6 +39,4 @@ class DoubleUltimateShips : Game() {
     override fun dispose() {
         super.dispose()
     }
-
-
 }
