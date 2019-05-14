@@ -15,7 +15,7 @@ class DoubleUltimateShips : Game() {
     val skins = SkinsResources()
     val images = ImagesResources()
     val fonts = FontsResources()
-    var labels: ResourceBundle
+    val labels: ResourceBundle
     internal lateinit var gameSkin: Skin
 
     init {

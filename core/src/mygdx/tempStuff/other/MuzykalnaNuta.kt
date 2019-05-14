@@ -11,12 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image
 
 class MuzykalnaNuta(texture: Texture) : Image(texture) {
 
-    var effect: ParticleEffect
+    var effect = ParticleEffect()
     val imagesResources = ImagesResources()
 
     init {
-        effect = ParticleEffect()
-        var textureAtlas = TextureAtlas()
+        val textureAtlas = TextureAtlas()
         textureAtlas.addRegion("note", TextureRegion(texture))
         effect.load(Gdx.files.internal(imagesResources.particles.bubleNoteP()), textureAtlas)
         effect.start()

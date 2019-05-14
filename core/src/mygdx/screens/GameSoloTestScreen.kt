@@ -20,31 +20,23 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
 
     private val FIELD_WIDTH = 64
 
-    private var gameStage: Stage
-    private var guiStage: Stage
-    private var camera: OrthographicCamera
+    private val gameStage = Stage(ScreenViewport())
+    private val guiStage = Stage(ScreenViewport())
+    private val camera: OrthographicCamera
     private val skin: Skin
 
-    private var slider: Slider
-    private var multiplexer: InputMultiplexer
-    private var imageResources: ImagesResources
-    private var gridCreator: GridCreator
+    private val slider = createGuiSlider()
+    private val multiplexer = InputMultiplexer(guiStage, gameStage)
+    private val imageResources = ImagesResources()
+    private val gridCreator = GridCreator(FIELD_WIDTH, Color.BLACK,
+            BitmapFont(Gdx.files.internal(game.fonts.stencilFNT())))
 
     private val grid1: GridCreator.Grid
 
-    private var selectionBox: Image
+    private val selectionBox = createSelectedBox()
 
     init {
-        imageResources = ImagesResources()
         skin = game.gameSkin
-        gridCreator = GridCreator(FIELD_WIDTH, Color.BLACK, BitmapFont(Gdx.files.internal(game.fonts.stencilFNT())))
-        selectionBox = createSelectedBox()
-
-        gameStage = Stage(ScreenViewport())
-        guiStage = Stage(ScreenViewport())
-        slider = createGuiSlider()
-
-        multiplexer = InputMultiplexer(guiStage, gameStage)
 
         camera = gameStage.viewport.camera as OrthographicCamera
         camera.translate(200f, 250f)
@@ -61,7 +53,7 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
 
         gameStage.addListener(object : InputListener() {
             override fun scrolled(event: InputEvent?, x: Float, y: Float, amount: Int): Boolean {
-                slider.setValue(slider.value + (amount*-1*0.1f))
+                slider.setValue(slider.value + (amount * -1 * 0.1f))
                 Gdx.app.log("scrolled", "amount:" + amount)
                 return super.scrolled(event, x, y, amount)
             }
@@ -114,8 +106,8 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
         photoRealisticSea.addListener(object : ActorGestureListener() {
             override fun pan(event: InputEvent?, x: Float, y: Float, deltaX: Float, deltaY: Float) {
                 super.pan(event, x, y, deltaX, deltaY)
-                camera.position.x -= (deltaX* Gdx.graphics.density)
-                camera.position.y -= (deltaY* Gdx.graphics.density)
+                camera.position.x -= (deltaX * Gdx.graphics.density)
+                camera.position.y -= (deltaY * Gdx.graphics.density)
             }
         })
 
@@ -130,8 +122,8 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
         grid.addListener(object : ActorGestureListener() {
             override fun pan(event: InputEvent?, x: Float, y: Float, deltaX: Float, deltaY: Float) {
                 super.pan(event, x, y, deltaX, deltaY)
-                camera.position.x -= (deltaX* Gdx.graphics.density)
-                camera.position.y -= (deltaY* Gdx.graphics.density)
+                camera.position.x -= (deltaX * Gdx.graphics.density)
+                camera.position.y -= (deltaY * Gdx.graphics.density)
             }
 
             override fun tap(event: InputEvent?, x: Float, y: Float, count: Int, button: Int) {
@@ -144,8 +136,8 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
                     val cordY = (y - board.y).toInt() / FIELD_WIDTH
                     Gdx.app.log("name:" + board.name, "cordX:" + cordX + " cordY:" + cordY)
 
-                    val targetX = cordX*FIELD_WIDTH + board.x*2 - gridCreator.thickness
-                    val targetY = cordY*FIELD_WIDTH + board.y*2 - gridCreator.thickness - 1
+                    val targetX = cordX * FIELD_WIDTH + board.x * 2 - gridCreator.thickness
+                    val targetY = cordY * FIELD_WIDTH + board.y * 2 - gridCreator.thickness - 1
 
 //                    Gdx.app.log("name:"+grid.name,"targetX:"+targetX+" targetY:"+targetY)
 //                    Gdx.app.log("name:"+grid.name,"gridX:"+grid.x+" gridY:"+grid.y)
@@ -168,7 +160,7 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
         var slider = Slider(1f, 2f, 0.01f, true, skin)
         slider.setAnimateInterpolation(Interpolation.smooth)
 //        slider.setAnimateDuration(0.1f)
-        slider.setHeight(Gdx.graphics.height*0.8f)
+        slider.setHeight(Gdx.graphics.height * 0.8f)
         slider.setPosition(Gdx.graphics.getWidth() / 12f, Gdx.graphics.getHeight() / 10f)
         slider.setValue(1.5f)
         slider.addListener(object : InputListener() {
@@ -176,10 +168,12 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
                 Gdx.app.log("touchDragged", "slider Value:" + slider.getValue())
                 super.touchDragged(event, x, y, pointer)
             }
+
             override fun touchUp(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int) {
                 Gdx.app.log("up", "slider Value:" + slider.getValue())
                 super.touchUp(event, x, y, pointer, button)
             }
+
             override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
                 Gdx.app.log("down", "slider Value:" + slider.value)
                 return true
@@ -197,6 +191,7 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
             override fun touchUp(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int) {
                 game.screen = MainMenuScreen(game)
             }
+
             override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
                 return true
             }
@@ -212,6 +207,7 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
             override fun touchUp(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int) {
                 selectRandomField(grid1)
             }
+
             override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
                 return true
             }
@@ -233,7 +229,7 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
         pixmap.setColor(Color.YELLOW)
 
         for (i in 0..gridCreator.thickness + 1) {
-            pixmap.drawRectangle(0 + i, 0 + i, max - i*2, max - i*2)
+            pixmap.drawRectangle(0 + i, 0 + i, max - i * 2, max - i * 2)
         }
 
         return Image(Texture(pixmap))
