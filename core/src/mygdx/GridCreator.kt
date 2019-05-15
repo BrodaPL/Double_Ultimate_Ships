@@ -1,24 +1,24 @@
 package mygdx
 
+import com.badlogic.gdx.graphics.*
 import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.badlogic.gdx.graphics.*
-import com.badlogic.gdx.scenes.scene2d.Group
 
 /**
  * Max tiles, vertical or horisontal is 26(characters amount)
  */
 class GridCreator(val fieldWidth: Int, val color: Color, val font: BitmapFont) {
 
-    var thickness = 2
-    var spaceAfterLines = 8 + thickness
+    val thickness = 2
+    val spaceAfterLines = 8 + thickness
 
     private fun createEmptyGrid(rows: Int, colls: Int): Image {
         val maxX = (colls + 1) * fieldWidth - 1
         val maxY = (rows + 1) * fieldWidth - 1
 
-        var pixmap = Pixmap(maxX + 1, maxY + 1, Pixmap.Format.RGBA4444)
+        val pixmap = Pixmap(maxX + 1, maxY + 1, Pixmap.Format.RGBA4444)
         pixmap.setColor(color)
 
         for (i in 1..colls + 1) {
@@ -56,7 +56,7 @@ class GridCreator(val fieldWidth: Int, val color: Color, val font: BitmapFont) {
             throw IllegalArgumentException("There can not be more than 40 rows!")
         }
 
-        var grid = Grid(createEmptyGrid(rows, colls), rows, colls)
+        val grid = Grid(createEmptyGrid(rows, colls), rows, colls)
         grid.board.setPosition(x, y)
 
         grid.addActor(grid.board)
@@ -65,7 +65,7 @@ class GridCreator(val fieldWidth: Int, val color: Color, val font: BitmapFont) {
         // digits
         var rowLabel = 1
         for (i in 1..rows) {
-            var label = Label(rowLabel.toString(), labelStyle1)
+            val label = Label(rowLabel.toString(), labelStyle1)
             label.setPosition(x, (i) * fieldWidth + y + spaceAfterLines)
             grid.addActor(label)
             rowLabel++
@@ -73,7 +73,7 @@ class GridCreator(val fieldWidth: Int, val color: Color, val font: BitmapFont) {
 
         // chars
         for (i in 1..colls) {
-            var label = Label(((i + 64).toChar()).toString(), labelStyle1)
+            val label = Label(((i + 64).toChar()).toString(), labelStyle1)
             label.setPosition((i) * fieldWidth + x + spaceAfterLines, y)
             grid.addActor(label)
         }
@@ -81,5 +81,5 @@ class GridCreator(val fieldWidth: Int, val color: Color, val font: BitmapFont) {
         return grid
     }
 
-    public class Grid(var board: Image, val rows: Int, val colls: Int) : Group()
+    public class Grid(val board: Image, val rows: Int, val colls: Int) : Group()
 }

@@ -17,8 +17,8 @@ class BasicStuffTestingScreen(val game: Game, val skin: Skin) : Screen, InputPro
 
     internal lateinit var batch: SpriteBatch
 
-    internal var imagesRes = ImagesResources()
-    internal var soundRes = SoundssResources()
+    internal val imagesRes = ImagesResources()
+    internal val soundRes = SoundssResources()
 
     internal lateinit var texture: Texture
     internal lateinit var texture2: Texture
@@ -58,7 +58,7 @@ class BasicStuffTestingScreen(val game: Game, val skin: Skin) : Screen, InputPro
         sprite3 = Sprite(Texture(imagesRes.space.moonPNG()))
 
         for (i in 0..4) {
-            animClipsList.add(TextureRegion(texture3_1x5, i*64, 0, 64, 64))
+            animClipsList.add(TextureRegion(texture3_1x5, i * 64, 0, 64, 64))
         }
 
         animation1 = Animation<TextureRegion>(1 / 2f, animClipsList, Animation.PlayMode.LOOP)
@@ -116,8 +116,8 @@ class BasicStuffTestingScreen(val game: Game, val skin: Skin) : Screen, InputPro
             var currentFrame: TextureRegion = animation1.getKeyFrame(elapsedTime, true)
             batch.draw(currentFrame, 600f - 64, 800f - 64)
 
-            sprite1.setY(sprite1.getY() + Gdx.graphics.deltaTime*100)
-            if (sprite1.y> 800f) {
+            sprite1.setY(sprite1.getY() + Gdx.graphics.deltaTime * 100)
+            if (sprite1.y > 800f) {
                 sprite1.y = -512f
             }
             sprite1.draw(batch)
@@ -137,7 +137,7 @@ class BasicStuffTestingScreen(val game: Game, val skin: Skin) : Screen, InputPro
             font.draw(batch, "y: " + Gdx.input.getY(), 8f, 32f)
             font.draw(batch, "x: " + Gdx.input.getX(), 8f, 16f)
         } else if (currentState == TestStates.SOUND) {
-            if (! soundBackground.isPlaying) {
+            if (!soundBackground.isPlaying) {
                 soundBackground.play()
             }
             inputVal = "Click mouse buttons to do sound."

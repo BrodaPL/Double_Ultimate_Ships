@@ -44,7 +44,10 @@ class ButtonsTestingScreen(val game: Game, val skin: Skin) : Screen {
         Gdx.input.inputProcessor = stage
 
         val image1 = Image(texture)
-        image1.setPosition(Gdx.graphics.width / 3 - image1.width / 2, Gdx.graphics.height * 2 / 3 - image1.height / 2)
+        image1.setPosition(
+            Gdx.graphics.width / 3 - image1.width / 2,
+            Gdx.graphics.height * 2 / 3 - image1.height / 2
+        )
         image1.rotateBy(45f)
         image1.setSize(texture.width / 2f, texture.height / 2f)
         stage.addActor(image1)
@@ -54,7 +57,10 @@ class ButtonsTestingScreen(val game: Game, val skin: Skin) : Screen {
         textureRegion.setRegion(0, 0, texture.width * 8, texture.height * 4)
         val image2 = Image(textureRegion)
         image2.setSize(400f, 200f)
-        image2.setPosition(Gdx.graphics.width * 2 / 3 - image2.width / 2, Gdx.graphics.height * 2 / 3 - image2.height / 2)
+        image2.setPosition(
+            Gdx.graphics.width * 2 / 3 - image2.width / 2,
+            Gdx.graphics.height * 2 / 3 - image2.height / 2
+        )
         stage.addActor(image2)
 
         val mySkin = Skin(Gdx.files.internal(skins.neon.skin.neon_uiJSON()))
@@ -62,14 +68,14 @@ class ButtonsTestingScreen(val game: Game, val skin: Skin) : Screen {
         val colWidth = Gdx.graphics.getWidth() / 12
 
         // TITLE
-        var title = Label("Buttons with Skins", mySkin, "over")
+        val title = Label("Buttons with Skins", mySkin, "over")
         title.setSize(Gdx.graphics.getWidth().toFloat(), rowHeight * 2f)
         title.setPosition(0f, Gdx.graphics.getHeight() - colWidth * 2f)
         title.setAlignment(Align.center)
         stage.addActor(title)
 
         // BASIC BUTTON
-        var basicButton = Button(mySkin, "default")
+        val basicButton = Button(mySkin, "default")
         basicButton.setSize(colWidth * 4f, rowHeight.toFloat())
         basicButton.setPosition(colWidth.toFloat(), Gdx.graphics.getHeight() - rowHeight * 3f)
         basicButton.addListener(object : InputListener() {
@@ -77,7 +83,13 @@ class ButtonsTestingScreen(val game: Game, val skin: Skin) : Screen {
                 outputLabel.setText("Press a Button.")
             }
 
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
                 outputLabel.setText("Button is under pressure! Release it quick!")
                 return true
             }
@@ -90,19 +102,25 @@ class ButtonsTestingScreen(val game: Game, val skin: Skin) : Screen {
                 outputLabel.setText("Press a Button.")
             }
 
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
                 outputLabel.setText("Text button is under pressure! Release it quick!")
                 return true
             }
         }
-        var textBtn = TextButton("Press it!", mySkin, "default")
+        val textBtn = TextButton("Press it!", mySkin, "default")
         textBtn.setSize(colWidth * 4f, rowHeight.toFloat())
         textBtn.setPosition(colWidth * 7f, Gdx.graphics.getHeight() - rowHeight * 3f)
         textBtn.addListener(textBtnInputListener)
         stage.addActor(textBtn)
 
         // IMAGE BUTTON
-        var imageBtn = ImageButton(mySkin)
+        val imageBtn = ImageButton(mySkin)
         imageBtn.setSize(colWidth*4f, rowHeight*2f)
         imageBtn.getStyle().imageUp = TextureRegionDrawable(TextureRegion(Texture(Gdx.files.internal(resources.switch_offPNG()))))
         imageBtn.style.imageOver = TextureRegionDrawable(TextureRegion(Texture(Gdx.files.internal(resources.switch_offPNG()))))
@@ -114,7 +132,7 @@ class ButtonsTestingScreen(val game: Game, val skin: Skin) : Screen {
         stage.addActor(imageBtn)
 
         // IMAGE TEXT BUTTON - BACK
-        var imageTextBtn = ImageTextButton("BACK to MAIN MENU", mySkin, "checkbox")
+        val imageTextBtn = ImageTextButton("BACK to MAIN MENU", mySkin, "checkbox")
         imageTextBtn.setSize(colWidth*4f, rowHeight*2f)
         imageTextBtn.getStyle().imageUp = TextureRegionDrawable(TextureRegion(Texture(Gdx.files.internal(resources.switch_offPNG()))))
         imageTextBtn.style.imageOver = TextureRegionDrawable(TextureRegion(Texture(Gdx.files.internal(resources.switch_offPNG()))))
@@ -127,7 +145,13 @@ class ButtonsTestingScreen(val game: Game, val skin: Skin) : Screen {
                 game.setScreen(TitleScreenOne(game, skin))
             }
 
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
                 return true
             }
         })

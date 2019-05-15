@@ -3,19 +3,19 @@ package mygdx.tempStuff.shaders
 import assets.tempStuff.shaders.ShadersResources
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.scenes.scene2d.actions.Actions
-import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction
 import com.badlogic.gdx.graphics.Pixmap
+import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.FrameBuffer
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Group
+import com.badlogic.gdx.scenes.scene2d.actions.Actions
+import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction
 
 // TODO Initial stuff. Not working yet.
 class ShockWave : Group() {
-    private var shaderResources: ShadersResources
+    private var shaderResources = ShadersResources()
 
     private val fbo: FrameBuffer
     private val vertexShader: String
@@ -42,7 +42,6 @@ class ShockWave : Group() {
 //    }
 
     init {
-        shaderResources = ShadersResources()
         disabled = true
         time = 0f
         vertexShader = Gdx.files.internal(shaderResources.shockWave.vertexGLSL()).readString()
