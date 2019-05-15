@@ -77,7 +77,13 @@ class MainMenuScreen(val _game: DoubleUltimateShips) : Screen {
                 game.setScreen(GameSoloTestScreen(game))
             }
 
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
                 return true
             }
         })
@@ -94,7 +100,13 @@ class MainMenuScreen(val _game: DoubleUltimateShips) : Screen {
 //                game.setScreen(LanMenuScreen(game, skin))
             }
 
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
                 return true
             }
         })
@@ -113,7 +125,13 @@ class MainMenuScreen(val _game: DoubleUltimateShips) : Screen {
 //                game.setScreen(OptionScreenOne(game, skin))
             }
 
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
                 return true
             }
         })
@@ -129,7 +147,13 @@ class MainMenuScreen(val _game: DoubleUltimateShips) : Screen {
                 game.setScreen(TitleScreenOne(game, skin))
             }
 
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
                 return true
             }
         })

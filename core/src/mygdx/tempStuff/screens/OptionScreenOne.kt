@@ -19,15 +19,12 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport
 import mygdx.tempStuff.shaders.ShockWave
 
 class OptionScreenOne(val game: Game, val skin: Skin) : Screen {
-
-    internal var stage: Stage
-    val imagesResources: ImagesResources
+    internal val stage = Stage(ScreenViewport())
+    val imagesResources = ImagesResources()
 
     init {
-        imagesResources = ImagesResources()
-        stage = Stage(ScreenViewport())
         stage.addActor(ShockWave.instance)
-        var background = Image(Texture(imagesResources.temp_map__to_replaceJPG()))
+        val background = Image(Texture(imagesResources.temp_map__to_replaceJPG()))
         background.addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
                 ShockWave.instance.start(x, y)
@@ -73,7 +70,7 @@ class OptionScreenOne(val game: Game, val skin: Skin) : Screen {
     }
 
     private fun createTitleLabel(): Label {
-        var titleLbl = Label("Options Screen", skin, "default-black")
+        val titleLbl = Label("Options Screen", skin, "default-black")
         titleLbl.setAlignment(Align.center)
         titleLbl.setY(Gdx.graphics.getHeight()*2 / 3f)
         titleLbl.setWidth(Gdx.graphics.getWidth().toFloat())
@@ -81,7 +78,7 @@ class OptionScreenOne(val game: Game, val skin: Skin) : Screen {
     }
 
     private fun createLabel2(): Label {
-        var titleLbl = Label("So many options here...", skin, "default-black")
+        val titleLbl = Label("So many options here...", skin, "default-black")
         titleLbl.setAlignment(Align.center)
         titleLbl.setY(Gdx.graphics.getHeight()*2 / 4f)
         titleLbl.setWidth(Gdx.graphics.getWidth().toFloat())
@@ -89,14 +86,20 @@ class OptionScreenOne(val game: Game, val skin: Skin) : Screen {
     }
 
     private fun createBackButton(): TextButton {
-        var backBtn = TextButton("Back", skin)
+        val backBtn = TextButton("Back", skin)
         backBtn.setWidth(Gdx.graphics.getWidth() / 2f)
         backBtn.setPosition(Gdx.graphics.getWidth() / 2 - backBtn.getWidth() / 2, Gdx.graphics.getHeight() / 4 - backBtn.getHeight() / 2)
         backBtn.addListener(object : InputListener() {
             override fun touchUp(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int) {
                 game.setScreen(TitleScreenOne(game, skin))
             }
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
                 return true
             }
         })

@@ -16,25 +16,17 @@ import mygdx.tempStuff.other.MuzykalnaNuta
 
 class GameScreenGuiTest(private val game: Game, private val skin: Skin) : Screen {
 
-    private var gameStage: Stage
-    private var guiStage: Stage
-    private var camera: OrthographicCamera
+    private val gameStage = Stage(ScreenViewport())
+    private val guiStage = Stage(ScreenViewport())
+    private val camera: OrthographicCamera
 
-    private var slider: Slider
-    private var multiplexer: InputMultiplexer
-    private var imageResources: ImagesResources
+    private val slider = createGuiSlider()
+    private val multiplexer = InputMultiplexer(guiStage, gameStage)
+    private val imageResources = ImagesResources()
 
 //    private var shockWaveShader: ShockWave
 
     init {
-        imageResources = ImagesResources()
-
-        gameStage = Stage(ScreenViewport())
-        guiStage = Stage(ScreenViewport())
-        slider = createGuiSlider()
-
-        multiplexer = InputMultiplexer(guiStage, gameStage)
-
         camera = gameStage.viewport.camera as OrthographicCamera
         camera.translate(200f, 250f)
         camera.zoom = 1.5f
@@ -101,7 +93,7 @@ class GameScreenGuiTest(private val game: Game, private val skin: Skin) : Screen
     }
 
     private fun createPhotoRealisticSea(): Image {
-        var photoRealisticSea = Image(Texture(imageResources.temp_map__to_replaceJPG()))
+        val photoRealisticSea = Image(Texture(imageResources.temp_map__to_replaceJPG()))
 //        ShockWave.instance.addActor(photoRealisticSea)
         photoRealisticSea.addListener(object : ActorGestureListener() {
             override fun pan(event: InputEvent?, x: Float, y: Float, deltaX: Float, deltaY: Float) {
@@ -120,11 +112,17 @@ class GameScreenGuiTest(private val game: Game, private val skin: Skin) : Screen
     }
 
     private fun createRing(): Image {
-        var img = Image(Texture(imageResources.ringPNG()))
+        val img = Image(Texture(imageResources.ringPNG()))
         img.setPosition(900f, 900f)
 
         img.addListener(object : InputListener() {
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
                 img.setSize((button + 0.5f)*img.imageWidth, (button + 0.5f)*img.imageHeight)
                 Gdx.app.log("touchDown", "val:" + pointer + " " + button)
                 return super.touchDown(event, x, y, pointer, button)
@@ -150,24 +148,33 @@ class GameScreenGuiTest(private val game: Game, private val skin: Skin) : Screen
     }
 
     private fun createMusicalPlanet(): Image {
-        var img = MuzykalnaNuta(Texture(imageResources.space.uranusPNG()))
+        val img = MuzykalnaNuta(Texture(imageResources.space.uranusPNG()))
         img.setSize(img.width / 2f, img.width / 2f)
         img.setPosition(1500f, 100f)
-        img.addAction(Actions.repeat(-1, Actions.sequence(Actions.moveTo(Gdx.graphics.width*3 / 5f, Gdx.graphics.height*3 / 5f, 2f, Interpolation.sine),
-                                                               Actions.moveTo(Gdx.graphics.width*3 / 5f, Gdx.graphics.height*1 / 5f, 2f, Interpolation.sine),
-                                                                Actions.moveTo(1500f, 100f, 2f, Interpolation.sine))))
-
+        val actionOne = Actions.moveTo(
+            Gdx.graphics.width*3 / 5f, Gdx.graphics.height*3 / 5f,
+            2f, Interpolation.sine
+        )
+        val actionTwo = Actions.moveTo(
+            Gdx.graphics.width*3 / 5f, Gdx.graphics.height*1 / 5f,
+            2f, Interpolation.sine
+        )
+        val actionThree = Actions.moveTo(1500f, 100f, 2f, Interpolation.sine)
+        img.addAction(Actions.repeat(-1, Actions.sequence(actionOne, actionTwo, actionThree)))
         return img
     }
 
     private fun createGuiMagnifier(): Image {
-        var img = Image(Texture(imageResources.magnifierPNG()))
-        img.setPosition(Gdx.graphics.getWidth() / 2 - img.getWidth() / 4, Gdx.graphics.getHeight() / 2 - img.getHeight() / 2)
+        val img = Image(Texture(imageResources.magnifierPNG()))
+        img.setPosition(
+            Gdx.graphics.getWidth() / 2 - img.getWidth() / 4,
+            Gdx.graphics.getHeight() / 2 - img.getHeight() / 2
+        )
         return img
     }
 
     private fun createGuiSlider(): Slider {
-        var slider = Slider(1f, 2f, 0.01f, true, skin)
+        val slider = Slider(1f, 2f, 0.01f, true, skin)
         slider.setAnimateInterpolation(Interpolation.smooth)
 //        slider.setAnimateDuration(0.1f)
         slider.setHeight(Gdx.graphics.height*0.8f)
@@ -182,7 +189,13 @@ class GameScreenGuiTest(private val game: Game, private val skin: Skin) : Screen
                 Gdx.app.log("up", "slider Value:" + slider.getValue())
                 super.touchUp(event, x, y, pointer, button)
             }
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
                 Gdx.app.log("down", "slider Value:" + slider.value)
                 return true
             }
@@ -192,14 +205,20 @@ class GameScreenGuiTest(private val game: Game, private val skin: Skin) : Screen
     }
 
     private fun createBackToTitleButton(): TextButton {
-        var btn = TextButton("Back to menu", skin)
+        val btn = TextButton("Back to menu", skin)
         btn.width = (Gdx.graphics.width / 3).toFloat()
         btn.setPosition(Gdx.graphics.width / 2 - btn.width / 2, Gdx.graphics.height / 24 - btn.height / 2)
         btn.addListener(object : InputListener() {
             override fun touchUp(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int) {
                 game.screen = TitleScreenOne(game, skin)
             }
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
                 return true
             }
         })

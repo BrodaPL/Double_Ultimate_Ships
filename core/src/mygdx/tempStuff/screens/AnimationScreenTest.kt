@@ -126,7 +126,13 @@ class AnimationScreenTest(private val game: Game, private val skin: Skin) : Scre
                 game.screen = TitleScreenOne(game, skin)
             }
 
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
                 return true
             }
         })

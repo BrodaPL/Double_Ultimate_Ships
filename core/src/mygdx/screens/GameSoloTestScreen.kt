@@ -28,8 +28,10 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
     private val slider = createGuiSlider()
     private val multiplexer = InputMultiplexer(guiStage, gameStage)
     private val imageResources = ImagesResources()
-    private val gridCreator = GridCreator(FIELD_WIDTH, Color.BLACK,
-            BitmapFont(Gdx.files.internal(game.fonts.stencilFNT())))
+    private val gridCreator = GridCreator(
+        FIELD_WIDTH, Color.BLACK,
+        BitmapFont(Gdx.files.internal(game.fonts.stencilFNT()))
+    )
 
     private val grid1: GridCreator.Grid
 
@@ -174,7 +176,13 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
                 super.touchUp(event, x, y, pointer, button)
             }
 
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
                 Gdx.app.log("down", "slider Value:" + slider.value)
                 return true
             }
@@ -192,7 +200,13 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
                 game.screen = MainMenuScreen(game)
             }
 
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
                 return true
             }
         })
@@ -208,7 +222,13 @@ class GameSoloTestScreen(private val game: DoubleUltimateShips) : Screen {
                 selectRandomField(grid1)
             }
 
-            override fun touchDown(event: InputEvent?, x: Float, y: Float, pointer: Int, button: Int): Boolean {
+            override fun touchDown(
+                event: InputEvent?,
+                x: Float,
+                y: Float,
+                pointer: Int,
+                button: Int
+            ): Boolean {
                 return true
             }
         })

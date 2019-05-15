@@ -1,10 +1,10 @@
 package mygdx
 
+import com.badlogic.gdx.graphics.*
 import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.scenes.scene2d.Group
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.badlogic.gdx.graphics.*
-import com.badlogic.gdx.scenes.scene2d.Group
 
 /**
  * Max tiles, vertical or horisontal is 26(characters amount)
@@ -18,7 +18,7 @@ class GridCreator(val fieldWidth: Int, val color: Color, val font: BitmapFont) {
         val maxX = (colls + 1) * fieldWidth - 1
         val maxY = (rows + 1) * fieldWidth - 1
 
-        var pixmap = Pixmap(maxX + 1, maxY + 1, Pixmap.Format.RGBA4444)
+        val pixmap = Pixmap(maxX + 1, maxY + 1, Pixmap.Format.RGBA4444)
         pixmap.setColor(color)
 
         for (i in 1..colls + 1) {
